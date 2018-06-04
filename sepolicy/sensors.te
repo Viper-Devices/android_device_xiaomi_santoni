@@ -1,1 +1,0 @@
-allow sensors property_socket:sock_file write;

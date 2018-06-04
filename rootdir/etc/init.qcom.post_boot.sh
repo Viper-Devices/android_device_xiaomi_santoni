@@ -302,9 +302,6 @@ else
     SWAP_ENABLE_THRESHOLD=1048576
     swap_enable=`getprop ro.vendor.qti.config.swap`
 
-    # Enabling Adaptive Lowmemorykiller
-    echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
-
     if [ -f /sys/devices/soc0/soc_id ]; then
         soc_id=`cat /sys/devices/soc0/soc_id`
     else

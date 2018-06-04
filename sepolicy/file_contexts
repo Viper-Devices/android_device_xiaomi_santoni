@@ -7,14 +7,34 @@
 /sys/devices/soc/soc:fpc1020(/.*)?		u:object_r:fpc_sysfs:s0
 
 # Goodix Fingerprint
-/dev/goodix_fp					u:object_r:gx_fpd_device:s0
-/data/gf_data(/.*)?                             u:object_r:gx_fpd_data_file:s0
+/dev/goodix_fp*					u:object_r:gx_fpd_device:s0
 /persist/data/gxfp(/.*)?			u:object_r:gx_fpd_data_file:s0
+/data/system/fingerprint(/.*)?			u:object_r:gx_fpd_data_file:s0
+/(vendor|system/vendor)/bin/gx_fpd		u:object_r:gx_fpd_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.0-service.custom	u:object_r:hal_fingerprint_default_exec:s0
+
+# Disable / Not defined
+#/dev/ttyACM[0-9]*				u:object_r:gx_fpd_device:s0
+#/dev/gf66xx-spi				u:object_r:gx_fpd_device:s0
+#/dev/lirc[0-9]*				u:object_r:lirc_device:s0
 
 # Rild
 /(vendor|system/vendor)/radio/qcril_database/qcril.db			u:object_r:rild_file:s0
 
-# Sys files
-/sys/devices/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?		u:object_r:sysfs_leds:s0
-/sys/devices/soc/leds-qpnp-[0-9]+/leds(/.*)?				u:object_r:sysfs_leds:s0
-/sys/devices/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/enable_dt2w		u:object_r:proc_touchpanel:s0
+# Data files
+/data/misc/netmgr/log\.txt			u:object_r:netmgrd_data_file:s0
+/data/vendor/time(/.*)?                         u:object_r:time_data_file:s0
+
+# Proc files
+/proc/touchpanel(/.*)?                          u:object_r:proc_touchpanel:s0
+
+# Camera
+/system/bin/mm-qcamera-daemon			u:object_r:mm-qcamerad_exec:s0
+
+# Debugfs files
+/sys/kernel/debug/rmt_storage(/.*)?             u:object_r:debugfs_rmt:s0
+/sys/kernel/debug/rpm_stats                     u:object_r:debugfs_rpm:s0
+/sys/kernel/debug/rpm_master_stats              u:object_r:debugfs_rpm:s0
+
+# Bluetooth
+/(vendor|system/vendor)/bin/hci_qcomm_init	u:object_r:qti_init_shell_exec:s0

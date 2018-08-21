@@ -1598,8 +1598,8 @@ int IPACM_Lan::handle_wan_up(ipa_ip_type ip_type)
 /* only offload UL traffic of certain clients */
 #ifdef FEATURE_IPACM_HAL
 		flt_rule_entry.rule.attrib.attrib_mask |= IPA_FLT_SRC_ADDR;
-		flt_rule_entry.rule.attrib.u.v4.dst_addr_mask = prefix[IPA_IP_v4].v4Mask;
-		flt_rule_entry.rule.attrib.u.v4.dst_addr = prefix[IPA_IP_v4].v4Addr;
+		flt_rule_entry.rule.attrib.u.v4.src_addr_mask = prefix[IPA_IP_v4].v4Mask;
+		flt_rule_entry.rule.attrib.u.v4.src_addr = prefix[IPA_IP_v4].v4Addr;
 #endif
 		memcpy(&m_pFilteringTable->rules[0], &flt_rule_entry, sizeof(flt_rule_entry));
 		if (false == m_filtering.AddFilteringRule(m_pFilteringTable))
@@ -3252,8 +3252,7 @@ int IPACM_Lan::handle_uplink_filter_rule(ipacm_ext_prop *prop, ipa_ip_type iptyp
 
 #ifdef FEATURE_IPACM_HAL
 		/* add prefix equation in modem UL rules */
-		if(iptype == IPA_IP_v4 && (flt_rule_entry.rule.eq_attrib.num_offset_meq_32 >= 0)
-			&& (flt_rule_entry.rule.eq_attrib.num_offset_meq_32 < IPA_IPFLTR_NUM_MEQ_32_EQNS))
+		if(iptype == IPA_IP_v4 && flt_rule_entry.rule.eq_attrib.num_offset_meq_32 < IPA_IPFLTR_NUM_MEQ_32_EQNS)
 		{
 			flt_rule_entry.rule.eq_attrib.num_offset_meq_32++;
 			eq_index = flt_rule_entry.rule.eq_attrib.num_offset_meq_32 - 1;
@@ -3287,9 +3286,7 @@ int IPACM_Lan::handle_uplink_filter_rule(ipacm_ext_prop *prop, ipa_ip_type iptyp
 		}
 		else
 		{
-			if ((flt_rule_entry.rule.eq_attrib.num_offset_meq_128 >= 0) &&
-				(flt_rule_entry.rule.eq_attrib.num_offset_meq_128 
-					< IPA_IPFLTR_NUM_MEQ_128_EQNS))
+			if (flt_rule_entry.rule.eq_attrib.num_offset_meq_128 < IPA_IPFLTR_NUM_MEQ_128_EQNS)
 			{
 				flt_rule_entry.rule.eq_attrib.num_offset_meq_128++;
 				eq_index = flt_rule_entry.rule.eq_attrib.num_offset_meq_128 - 1;

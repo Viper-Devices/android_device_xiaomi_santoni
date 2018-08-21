@@ -4690,9 +4690,7 @@ fail:
 int IPACM_Wan::handle_down_evt_ex()
 {
 	int res = IPACM_SUCCESS;
-	uint32_t i;
-#ifndef FEATURE_IPACM_HAL
-	uint32_t tether_total;
+	uint32_t i, tether_total;
 	int ipa_if_num_tether_tmp[IPA_MAX_IFACE_ENTRIES];
 #endif
 

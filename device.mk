@@ -416,7 +416,8 @@ PRODUCT_COPY_FILES += \
 
 # USB HAL
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
+    android.hardware.usb@1.0-service \
+    android.hardware.usb.gadget@1.0-service-qti
 
 # Vibrator
 PRODUCT_PACKAGES += \
